@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<% include partials/head.ejs %>
+  </head>
+  <body>
+    <div id="container">
+		<div id="page-header">
+			</br><img id="logo-image" src="/Images/logo_twitter.png" />
+			<h1>Tweet Map Application</h1>
+		</div>
+		<div id="page-body"> 
+			<div id="drop-down-wrapper">
+				 <div id="drop-down-heading"> Filter tweets by keyword </div>
+				<div id=filters align='center'>
+					<select id="mainselection">
+						<option value="trump">Trump</option>
+						<option value="FakeSpringBreakFacts ">Fake Spring Break Facts </option>
+						<option value="healtcare">Healtcare</option>
+						<option value="politics">Politics</option>
+						<option value="womansday">Womans Day</option>
+						<option value="FC">FC Barcelona</option>
+						<option value="Modi">Narendra Modi(NaMo)</option>	
+						<option value="nike">Nike</option>
+						<option value="tech">Top Technology</option>
+						<option value="tesla">Tesla</option>
+					</select>
+				</div>
+			</div></br>
+			<div id="map" align='center'></div>
+		</div>
+	</div>
+ 	<script type="text/javascript">
+    
+ 	var map;
+    function initMap() {
+        // var uluru = {lat: -25.363, lng: 131.044};
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 8,
+          center: new google.maps.LatLng(40.730610,-73.935242),
+          mapTypeId: "terrain"
+        });
+        
+        var script = document.createElement('script');
+       	script.src = 'https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
+
+        window.eqfeed_callback = function(results){
+        	for(var i=0;i<results.features.length;i++)
+        	{
+        		var coords = results.features[i].geometry.coordinates;
+        		var latLng = new google.maps.LatLng(coords[1],coords[0]);
+        		var marker = new google.maps.Marker({
+        			position:latLng,
+        			map : map
+        		});
+        	}
+        }
+    }
+	</script>
+    <% include partials/scripts.ejs %>
+
+    <!-- <script type="text/javascript">
+    	$(function(){
+    		
+    	})
+    </script> -->
+  </body>
+</html>
