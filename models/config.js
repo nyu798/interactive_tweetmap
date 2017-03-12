@@ -1,17 +1,43 @@
+// twitter instance
 var twit = require('twitter');
+
+// the initialization for the amazon aws
 var elasticsearch = require('elasticsearch');
+var http_aws_es = require('http-aws-es');
 
+
+// // aws elasticsearch instance
+// var elasticsearch = require('aws-es');
+// elasticsearch local instance 
+//var elasticsearch = require('elasticsearch');
+
+// credentials for the twitter 
 var twitter = new twit({
-	consumer_key: 'i4ZbyZo0bNDqvtX2MeuQpQuuM',
-	consumer_secret: 'sYyxYoJHhhJKrd7MQvwLcP5BQOuc8A36FmzrjWJFw9QAyy1Hbb',
-	access_token_key: '4826489261-xWs8iYr4S7EIGzQBDNS2XkLCr9ztvgd997p2YiG',
-	access_token_secret: 'XwFHijujBv6MP9a7s8vxRfNsz26M9MNzC866kQmSFcVev'
+	consumer_key: '	####################',
+	consumer_secret: '######################################',
+	access_token_key: '	###################################',
+	access_token_secret: '#####################################'
 });
 
-var elastic_client = new elasticsearch.Client({
-  host: 'localhost:9200',
-  // log: 'trace'
+//credentials for the aws elasticsearch
+var elasticsearch_client_aws = elasticsearch.Client( { 
+  hosts: 'search-my-first-tweet-map-goizzcdxue2ghq3pauuiuxzfz4.us-west-2.es.amazonaws.com',
+  connectionClass: http_aws_es,
+  log: 'trace',
+  amazonES: {
+    region: 'us-west-2',
+    accessKey: 'AKIAJ7QHI4VKSGGFML2Q',
+    secretKey: '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'
+  }
 });
+
+// //local elasticsearch instance 
+// var elastic_client = new elasticsearch.Client({
+//   host: 'localhost:9200',
+//    log: 'trace'
+// });
 
 module.exports.twitter = twitter;
-module.exports.elastic_client = elastic_client;
+// module.exports.elastic_client = elastic_client;
+module.exports.elasticsearch_client_aws = elasticsearch_client_aws;
+// module.exports.elasticsearch_client_aws = elasticsearch_client_aws;

@@ -1,33 +1,59 @@
-var q = require('q');
+var Q = require('q');
 var config = require('./config');
-var elastic_client = config.elastic_client;
+// var elastic_client = config.elastic_client;
+var elasticsearch_client_aws = config.elasticsearch_client_aws;
 
 function search_document(obj_index, obj_type, match_string){
+  console.log("inside the search_document");
   // initialize the Q object for making the promise
-  var defered = q.defer(); 
+  var defered = Q.defer(); 
   // make the query object first
   var query_obj = {
     "query":{
       "match": match_string
     }
   };
-	console.log("starting the search in the elastic_client");
-  elastic_client.search({
-  		index: obj_index,
-  		type: obj_type,
-  		body: {
-    		query: {
-      			match: {
-        			message: match_string
-      			}
-    		}
-  		}
-	}).then(function (resp) {
-    	var hits = resp.hits.hits;
-    	console.log(JSON.stringify(hits));
-	}, function (err) {
-    	console.trace(err.message);
-	});
+
+  elasticsearch_client_aws.search({
+      index: obj_index,
+      type: obj_type,
+      body: {
+        from:0,
+        size:200,
+        query: {
+            match: {
+              message: match_string
+            }
+        }
+      }
+  }).then(function (resp) {
+      // console.log("after getting the result");
+      var hits = resp.hits.hits;
+      defered.resolve(hits);
+  }, function (err) {
+      console.trace(err.message);
+  });
+  // the query for searching the elastic search with query string to be match_string for local elasticseach.
+ //  elastic_client.search({
+ //  		index: obj_index,
+ //  		type: obj_type,
+ //  		body: {
+ //    		query: {
+ //      			match: {
+ //        			message: match_string
+ //      			}
+ //    		}
+ //  		}
+	// }).then(function (resp) {
+ //    	// console.log("after getting the result");
+ //      var hits = resp.hits.hits;
+ //      defered.resolve(hits);
+	// }, function (err) {
+ //    	console.trace(err.message);
+	// });
+  
+  // returning the promise that value will be retured.
+  return defered.promise;
 }
 
 module.exports.search_document = search_document;
