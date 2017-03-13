@@ -26,8 +26,8 @@ var elasticsearch_client_aws = elasticsearch.Client( {
   log: 'trace',
   amazonES: {
     region: 'us-west-2',
-    accessKey: 'AKIAJ7QHI4VKSGGFML2Q',
-    secretKey: '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'
+    accessKey: '########################',
+    secretKey: '#######################'
   }
 });
 
