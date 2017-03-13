@@ -1,17 +1,12 @@
 {
-  "name": "tweet_map_express",
-  "version": "1.0.0",
+  "name": "tweet_map_express1",
+  "version": "1.0.1",
+  "private": true,
   "description": "Application for plotting the tweets on the Google Map",
-  "main": "app.js",
+  "main":"app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start":"node app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "tweetMap"
-  },
-  "author": "harshit",
-  "license": "ISC",
   "dependencies": {
     "aws-es": "^1.5.3",
     "body-parser": "^1.17.1",
